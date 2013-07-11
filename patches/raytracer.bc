@@ -1,0 +1,133 @@
+#!/usr/bin/env bc -lq
+width=640
+height=400
+angle=0.785 #pi/4
+
+spherepos[0]=width/2; spherepos[1]=height/2; spherepos[2]=140
+sphereradius=100
+spherecolor[0]=255; spherecolor[1]=170; spherecolor[2]=85
+
+lightpos[0]=0; lightpos[1]=0; lightpos[2]=0
+campos[0]=width/2; campos[1]=height/2; campos[2]=-((width/2)/(s(angle/2)/c(angle/2)))
+
+diffuse=0.75
+specular=0.5
+ambient=0.25
+shininess=10
+
+bgcolor[0]=0; bgcolor[1]=0; bgcolor[2]=0
+
+scale=4
+defaultscale=scale
+
+define len(vector[]) {
+	return sqrt(vector[0]^2+vector[1]^2+vector[2]^2)
+}
+
+define clamp(value, min, max) {
+	if(value<min) {
+		return min
+	} else if(value>max) {
+		return max
+	}
+	
+	return value
+}
+
+define printpixel(color[]) {
+	scale=0
+	
+	print "\\\\x0\\\\x",color[2]/1,"\\\\x",color[1]/1,"\\\\x",color[0]/1,"\n"
+	
+	scale=defaultscale
+}
+
+define shade(normal[], dir[], lightdir[], diffusecolor[]) {
+	auto cosang, half[], l, blinnterm, color[]
+	
+	cosang=clamp(normal[0]*lightdir[0]+normal[1]*lightdir[1]+normal[2]*lightdir[2], 0, 1)
+	
+	half[0]=dir[0]+lightdir[0]; half[1]=dir[1]+lightdir[1]; half[2]=dir[2]+lightdir[2]
+	l=len(half[])
+	half[0]/=l; half[1]/=l; half[2]/=l
+	
+	blinnterm=0
+	if(cosang>0) {
+		blinnterm=clamp(normal[0]*half[0]+normal[1]*half[1]+normal[2]*half[2], 0, 1)^shininess
+	}
+	
+	color[0]=clamp(diffusecolor[0]*cosang*diffuse+255*blinnterm*specular+diffusecolor[0]*ambient, 0, 255)
+	color[1]=clamp(diffusecolor[1]*cosang*diffuse+255*blinnterm*specular+diffusecolor[1]*ambient, 0, 255)
+	color[2]=clamp(diffusecolor[2]*cosang*diffuse+255*blinnterm*specular+diffusecolor[2]*ambient, 0, 255)
+	
+	null=printpixel(color[])
+}
+
+define sphere(pos[], radius, origin[], dir[]) {
+	auto s[], a, b, c, square, t, t2
+	
+	s[0]=pos[0]-origin[0]; s[1]=pos[1]-origin[1]; s[2]=pos[2]-origin[2]
+	
+	a=1	#the expression would be (dir[0]^2+dir[1]^2+dir[2]^2), but it's always 1 because the vector is normalized
+	b=-2*(dir[0]*s[0]+dir[1]*s[1]+dir[2]*s[2])
+	c=s[0]^2+s[1]^2+s[2]^2-radius^2
+	
+	square=(b^2)-(4*a*c)
+	
+	if(square>0) {
+		t=(-b+sqrt(square))/(2*a)
+		t2=(-b-sqrt(square))/(2*a)
+		
+		if(t2<t) {
+			t=t2
+		}
+		
+		return t
+	}
+	
+	return 0
+}
+
+define trace(x, y) {
+	auto dir[], l, t, is[], normal[], lightdir[]
+	
+	dir[0]=x-campos[0]; dir[1]=y-campos[1]; dir[2]=0-campos[2]
+	l=len(dir[])
+	dir[0]/=l; dir[1]/=l; dir[2]/=l
+	
+	t=sphere(spherepos[], sphereradius, campos[], dir[])
+	
+	if(t>0) {
+		is[0]=t*dir[0]+campos[0]; is[1]=t*dir[1]+campos[1]; is[2]=t*dir[2]+campos[2]
+		
+		normal[0]=spherepos[0]-is[0]; normal[1]=spherepos[1]-is[1]; normal[2]=spherepos[2]-is[2]
+		l=len(normal[])
+		normal[0]/=l; normal[1]/=l; normal[2]/=l
+		
+		lightdir[0]=is[0]-lightpos[0]; lightdir[1]=is[1]-lightpos[1]; lightdir[2]=is[2]-lightpos[2]
+		l=len(lightdir[])
+		lightdir[0]/=l; lightdir[1]/=l; lightdir[2]/=l
+		
+		null=shade(normal[], dir[], lightdir[], spherecolor[])
+		return
+	}
+	
+	null=printpixel(bgcolor[])
+}
+
+define mainloop(width, height) {
+	auto x, y
+	
+	for(y=0;y<height;y++) {
+		for(x=0;x<width;x++) {
+			null=trace(x, y)
+		}
+	}
+}
+
+obase=16
+
+null=mainloop(width, height)
+
+halt
+

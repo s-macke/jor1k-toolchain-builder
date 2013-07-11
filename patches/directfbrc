@@ -1,0 +1,11 @@
+system=fbdev
+fbdev=/dev/fb0
+no-sighandler
+#debug
+#debugmem
+#debugshm
+#trace
+#log-file=dfb_log
+#mouse-source=/dev/input/mice?
+#mouse-protocol=MS?
+

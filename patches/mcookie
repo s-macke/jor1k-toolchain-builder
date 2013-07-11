@@ -1,0 +1,2 @@
+echo $(od -N 16 -t x4 /dev/urandom | awk '{print $2$3$4$5}')
+

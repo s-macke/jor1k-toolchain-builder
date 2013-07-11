@@ -1,0 +1,31 @@
+--- a/src/glsl/builtin_compiler/Makefile.am      2013-02-20 01:26:22.000000000 +0100
++++ b/src/glsl/builtin_compiler/Makefile.am      2013-02-26 11:15:59.140842593 +0100
+@@ -64,6 +64,23 @@
+ include ../Makefile.sources
+ 
+ noinst_PROGRAMS = builtin_compiler
++
++if CROSS_COMPILING
++builtin_compiler_SOURCES = \
++       $(top_srcdir)/src/mesa/main/hash_table.c        \
++       $(top_srcdir)/src/mesa/main/imports.c           \
++       $(top_srcdir)/src/mesa/program/prog_hash_table.c\
++       $(top_srcdir)/src/mesa/program/symbol_table.c   \
++       $(BUILTIN_COMPILER_CXX_FILES)                   \
++       $(GLSL_COMPILER_CXX_FILES)                      \
++       $(LIBGLCPP_GENERATED_FILES)                     \
++       $(LIBGLCPP_FILES)                               \
++       $(BUILTIN_COMPILER_GENERATED_CXX_FILES)         \
++       $(LIBGLSL_FILES)
++builtin_compiler_CFLAGS = $(AM_CFLAGS)
++builtin_compiler_CPPFLAGS = $(AM_CPPFLAGS)
++builtin_compiler_CXXFLAGS = $(AM_CXXFLAGS)
++else
+ noinst_LTLIBRARIES = libglslcore.la libglcpp.la
+ 
+ libglcpp_la_SOURCES =                                  \
+@@ -82,3 +99,4 @@
+        $(BUILTIN_COMPILER_CXX_FILES)                   \
+        $(GLSL_COMPILER_CXX_FILES)
+ builtin_compiler_LDADD = libglslcore.la libglcpp.la
++endif

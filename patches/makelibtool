@@ -1,0 +1,17 @@
+#! /bin/sh
+ 
+PREFIX=$1
+ 
+export CC="${PREFIX}-gcc"
+export LD="${PREFIX}-ld"
+export NM="${PREFIX}-nm -B"
+export AR="${PREFIX}-ar"
+export RANLIB="${PREFIX}-ranlib"
+export LN_S="ln -s"
+export CFLAGS="-g -O2"
+ 
+echo "Rebuilding libtool for \"$PREFIX\" ..."
+./ltconfig --cache-file="./config.cache" --with-gcc --with-gnu-ld --no-verify \
+           ./ltmain.sh $PREFIX
+echo "Done."
+

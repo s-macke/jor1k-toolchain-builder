@@ -1,0 +1,3 @@
+Xfbdev :0 -wr -ac -noreset -fp /usr/share/fonts/X11/75dpi -nolisten inet6 -fb /dev/fb0 -screen 640x400 -dpi 170 &
+
+

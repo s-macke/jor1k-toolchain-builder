@@ -1,0 +1,5 @@
+mount -t proc none /mnt/proc
+mount --rbind /sys /mnt/sys
+mount --rbind /dev /mnt/dev
+chroot /mnt
+
