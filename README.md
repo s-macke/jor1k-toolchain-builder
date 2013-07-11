@@ -9,21 +9,16 @@ Parts are based on the book "Linux from Scratch"
 TOOLCHAIN
 ---------
 
-1. Edit the top lines of the Makefile
-2. Execute
-```text
-	make info (check and change in Makefile)
+Edit the top lines of the Makefile. Then execute
 
-	make init
-	
-	make fetchtoolchain
-	
-	make checktoolchain
-	
-	make toolchain
-	
-	make or1ksim (installed in /usr/local)
-```
+
+	make info (check and change in Makefile)		
+	make init		
+	make fetchtoolchain		
+	make checktoolchain		
+	make toolchain		
+	make or1ksim (installed in /usr/local)		
+
 
 To work with this toolchain execute
 	
