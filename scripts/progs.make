@@ -1,4 +1,3 @@
-
 openssl_VERSION = 1.0.1e
 busybox_VERSION = 1.20.2
 nano_VERSION = 2.2.6
@@ -79,9 +78,9 @@ bc:
 	cd src/$@; make install-strip DESTDIR=$(SYSROOT)
 
 DirectFB:
-	#$(call extractpatch,$@,$($@_VERSION))
-	#sed -i~ -e "s;#ifdef DIRECT_BUILD_NO_SA_SIGINFO;#if 1;" src/DirectFB/lib/direct/signals.c
-	#sed -i~ -e "s;#ifdef WIN32;#ifndef WIN32;" src/DirectFB/lib/direct/atomic.h
+	$(call extractpatch,$@,$($@_VERSION))
+	sed -i~ -e "s;#ifdef DIRECT_BUILD_NO_SA_SIGINFO;#if 1;" src/DirectFB/lib/direct/signals.c
+	sed -i~ -e "s;#ifdef WIN32;#ifndef WIN32;" src/DirectFB/lib/direct/atomic.h
 	cd src/$@; CFLAGS="-Os -fpic" ./configure $(CONFIG_HOST)	\
 		--enable-debug	\
 		--enable-trace	\
@@ -102,7 +101,6 @@ DirectFB:
 	cp patches/directfbrc $(SYSROOT)/etc/
 
 
-#for the pkg-config script look at autotools-mythbuster/pkgconfig/cross-compiling.html
 DirectFB-examples:
 	$(call extractpatch,$@,$($@_VERSION))
 	#or1k-linux-pkg-config --list-all
