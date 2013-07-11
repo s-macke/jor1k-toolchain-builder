@@ -11,13 +11,19 @@ TOOLCHAIN
 
 1. Edit the top lines of the Makefile
 2. Execute
-
+```text
 	make info (check and change in Makefile)
+
 	make init
+	
 	make fetchtoolchain
+	
 	make checktoolchain
+	
 	make toolchain
+	
 	make or1ksim (installed in /usr/local)
+```
 
 To work with this toolchain execute
 	
@@ -30,7 +36,7 @@ KERNEL
 Execute following commands
 	
 	make kernel
-
+	
 Progs and Libs
 --------------
 
@@ -38,13 +44,13 @@ To get a list of available programs and libraries look at scripts/progs.make
 	
 	make fetchprogs (unfortunately this does not work at the moment. You have to download the programs by yourself in the downloads folder)
 	make progs
-
+	
 
 Native Building Tools
 ---------------------
-
+	
 	make buildtools
-
+	
 
 DirectFB
 --------
