@@ -4,7 +4,7 @@ TOOLCHAIN_NAME = or1k-linux
 # --------------------------------------
 
 PATH := $(PATH):$(TOOLCHAIN_DIR)/bin
-SYSROOT := $(TOOLCHAIN_DIR)/or1k-linux/sys-root2
+SYSROOT := $(TOOLCHAIN_DIR)/or1k-linux/sys-root
 
 PARENT_DIR = $(lastword $(subst /, ,$(PWD)))
 
