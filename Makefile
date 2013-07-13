@@ -103,12 +103,17 @@ include scripts/misc.make
 
 
 kernel:
-	#patch src/linux/arch/openrisc/include/asm/bitops.h < patches/bitops_linux.patch
-	#cp patches/bitops.h src/linux/arch/openrisc/include/asm/
 	cd src/linux; make clean
 	cd src/linux; make distclean
 	cp patches/or1ksim.dts src/linux/arch/openrisc/boot/dts
 	cp patches/CONFIG_LINUX src/linux/.config
+	cd src/linux; make
+	cd src/linux; or1k-linux-objcopy -O binary vmlinux vmlinux.bin
+
+stdkernel:
+	cd src/linux; make clean
+	cd src/linux; make distclean
+	cd src/linux; make defconfig ARCH=or1k
 	cd src/linux; make
 	cd src/linux; or1k-linux-objcopy -O binary vmlinux vmlinux.bin
 
