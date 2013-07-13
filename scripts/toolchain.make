@@ -2,6 +2,7 @@ fetchtoolchain:
 	cd src; git clone git://github.com/openrisc/or1k-src.git 
 	cd src; git clone git://github.com/openrisc/or1k-gcc.git
 	cd src; git clone git://github.com/openrisc/uClibc-or1k.git
+	cd src; git clone git://github.com/openrisc/or1k-dejagnu.git
 	cd src; git clone git://openrisc.net/jonas/linux
 	cd src; git clone git://github.com/openrisc/or1ksim.git
 	cd src/or1k-gcc; git checkout or1k-native
@@ -10,6 +11,11 @@ or1ksim:
 	cd src/or1ksim; ./configure
 	cd src/or1ksim; make
 	cd src/or1ksim; make install
+
+dejagnu:
+	cd src/or1k-dejagnu; ./configure
+	cd src/or1k-dejagnu; make
+	cd src/or1k-dejagnu; make install
 
 toolchain:
 	$(MAKE) toolchain_newlib_stage1
