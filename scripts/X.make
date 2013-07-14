@@ -149,7 +149,7 @@ $(XLIBS) $(XLIBS2) $(PROTO_XLIBS) $(XFONTS):
 	$(call extractpatch,$@,$($@_VERSION))
 	cd src/$@; CFLAGS="-Os $($@_EXTRA_CFLAGS)" ./configure $(CONFIG_HOST) --sysconfdir=/etc --localstatedir=/var --disable-static $($@_EXTRA_CONFIG)
 	cd src/$@; make
-	#cd src/$@; find . -type f -name "*.la" -print0 | xargs -0 sed -i -e "s;libdir='/usr;libdir='$(SYSROOT)/usr;"
+	#cd src/$@; find . -type f -name "*.la" -print0 | xargs -r -0 sed -i -e "s;libdir='/usr;libdir='$(SYSROOT)/usr;"
 	cd src/$@; make install-strip DESTDIR=$(SYSROOT)
 	sed -i~ -e "s;libdir='/usr;libdir='$(SYSROOT)/usr;" $(SYSROOT)/usr/lib/*.la
 	sed -i~ -e "s; /usr/lib/libxcb.la; $(SYSROOT)/usr/lib/libxcb.la;" $(SYSROOT)/usr/lib/*.la
@@ -183,7 +183,7 @@ libxcb:
 	$(call extractpatch,$@,$($@_VERSION))
 	cd src/$@; CFLAGS="-Os $($@_EXTRA_CFLAGS)" ./configure $(CONFIG_HOST) --sysconfdir=/etc --localstatedir=/var --disable-static $($@_EXTRA_CONFIG)
 	cd src/$@; make
-	cd src/$@; find . -type f -name "*.la" | xargs -0 sed -i -e "s;libdir='/usr;libdir='$(SYSROOT)/usr;"
+	cd src/$@; find . -type f -name "*.la" -print0 | xargs -r -0 sed -i -e "s;libdir='/usr;libdir='$(SYSROOT)/usr;"
 	cd src/$@; make install-strip DESTDIR=$(SYSROOT)
 	sed -i~ -e "s;libdir='/usr;libdir='$(SYSROOT)/usr;" $(SYSROOT)/usr/lib/*.la
 	sed -i~ -e "s; /usr/lib/libxcb.la; $(SYSROOT)/usr/lib/libxcb.la;" $(SYSROOT)/usr/lib/*.la
