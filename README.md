@@ -6,6 +6,9 @@ The final goal is to build an bootable image with a number of tools available fo
 
 Parts are based on the book "Linux from Scratch"
 
+**The repository is outdated Please download http://www.simulationcorner.net/or1k-toolchain.tar.bz2 for the latest toolchain**
+
+
 TOOLCHAIN
 ---------
 
