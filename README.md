@@ -7,6 +7,7 @@ The final goal is to build an bootable image with a number of tools available fo
 Parts are based on the book "Linux from Scratch"
 
 **The repository is outdated Please download http://www.simulationcorner.net/or1k-toolchain.tar.bz2 for the latest toolchain**
+Instead of "make fetchprogs", download the files in http://simulationcorner.net/toolchain-downloads/ to the downloads folder.
 
 
 TOOLCHAIN
@@ -40,7 +41,7 @@ Progs and Libs
 
 To get a list of available programs and libraries look at scripts/progs.make
 	
-	make fetchprogs (unfortunately this does not work at the moment. You have to download the programs by yourself in the downloads folder)
+	make fetchprogs (unfortunately this does not work at the moment. You have to download the programs yourself into the downloads folder)
 	make progs
 	
 
